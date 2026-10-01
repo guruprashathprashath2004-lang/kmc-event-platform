@@ -1,0 +1,13 @@
+# Visual Studio / .NET
+.vs/
+bin/
+obj/
+*.user
+*.suo
+
+# Local secrets
+**/appsettings.Development.json
+
+# OS
+.DS_Store
+Thumbs.db

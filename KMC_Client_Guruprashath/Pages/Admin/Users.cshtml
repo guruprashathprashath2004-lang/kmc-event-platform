@@ -1,0 +1,62 @@
+@page
+@model KMC_Client_Guruprashath.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<section class="container py-5">
+    <div class="section-heading">
+        <div>
+            <div class="eyebrow">Admin</div>
+            <h1 class="h3 mb-0">Manage Users</h1>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-page="/Admin/Users" class="btn btn-sm @(string.IsNullOrEmpty(Model.Role) ? "btn-neon" : "btn-neon-outline")">All</a>
+            <a asp-page="/Admin/Users" asp-route-role="Citizen" class="btn btn-sm @(Model.Role == "Citizen" ? "btn-neon" : "btn-neon-outline")">Citizens</a>
+            <a asp-page="/Admin/Users" asp-route-role="Organizer" class="btn btn-sm @(Model.Role == "Organizer" ? "btn-neon" : "btn-neon-outline")">Organizers</a>
+            <a asp-page="/Admin/Users" asp-route-role="Admin" class="btn btn-sm @(Model.Role == "Admin" ? "btn-neon" : "btn-neon-outline")">Admins</a>
+        </div>
+    </div>
+
+    <div class="kmc-panel">
+        <div class="table-responsive">
+            <table class="table admin-table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Joined</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var u in Model.Users)
+                    {
+                        <tr>
+                            <td>@u.FullName</td>
+                            <td>@u.Username</td>
+                            <td>@u.Email</td>
+                            <td><span class="badge" style="background: var(--panel-2); color: var(--text-muted);">@u.Role</span></td>
+                            <td>@u.CreatedOn.ToString("dd MMM yyyy")</td>
+                            <td class="text-end">
+                                @if (u.Role != "Admin")
+                                {
+                                    <form method="post" asp-page-handler="Delete" asp-route-id="@u.UserId" class="d-inline"
+                                          onsubmit="return confirm('Remove this user account?');">
+                                        <button type="submit" class="btn btn-sm" style="background: rgba(255,84,112,0.12); color: var(--danger); border: 1px solid var(--danger);">Remove</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Users.Any())
+                    {
+                        <tr><td colspan="6" class="text-center text-muted-kmc py-4">No users found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

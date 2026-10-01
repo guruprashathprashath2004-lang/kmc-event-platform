@@ -1,0 +1,503 @@
+/* ==========================================================================
+   KMC Event Platform — "Dusk Trail" theme
+   Dark municipal-after-hours palette with magenta / cyan neon accents,
+   inspired by Kandy's Esala Perahera torch-lit night processions.
+   ========================================================================== */
+
+:root {
+  --bg: #0a0916;
+  --bg-alt: #12102a;
+  --panel: #191534;
+  --panel-2: #201b40;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f2eefc;
+  --text-muted: #a8a0cc;
+  --magenta: #ff2e9a;
+  --cyan: #22e6ff;
+  --amber: #ffb238;
+  --success: #38e39a;
+  --danger: #ff5470;
+  --radius: 14px;
+  --shadow-glow: 0 0 24px rgba(255, 46, 154, 0.25), 0 0 48px rgba(34, 230, 255, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(255, 46, 154, 0.16), transparent 60%),
+    radial-gradient(1000px 500px at 10% 0%, rgba(34, 230, 255, 0.12), transparent 55%),
+    var(--bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: "Rajdhani", "Segoe UI", sans-serif;
+  font-size: 17px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main.kmc-main { flex: 1 0 auto; }
+
+h1, h2, h3, h4, .display-font {
+  font-family: "Orbitron", "Rajdhani", sans-serif;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--magenta); }
+
+.text-muted-kmc { color: var(--text-muted) !important; }
+
+.eyebrow {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+
+/* ---------- Navbar ---------- */
+.kmc-navbar {
+  background: rgba(10, 9, 22, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.kmc-navbar .navbar-brand {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text) !important;
+}
+
+.kmc-navbar .navbar-brand span { color: var(--magenta); }
+
+.kmc-navbar .nav-link {
+  color: var(--text-muted) !important;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.5rem 1rem !important;
+  position: relative;
+}
+
+.kmc-navbar .nav-link:hover,
+.kmc-navbar .nav-link.active {
+  color: var(--text) !important;
+}
+
+.kmc-navbar .nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--magenta), var(--cyan));
+}
+
+/* ---------- Buttons ---------- */
+.btn-neon {
+  background: linear-gradient(135deg, var(--magenta), #b31763);
+  border: none;
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.6rem;
+  border-radius: 999px;
+  box-shadow: 0 0 0 rgba(255, 46, 154, 0);
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.btn-neon:hover {
+  color: #fff;
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.btn-neon-outline {
+  background: transparent;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+
+.btn-neon-outline:hover {
+  background: rgba(34, 230, 255, 0.1);
+  color: var(--cyan);
+  box-shadow: 0 0 18px rgba(34, 230, 255, 0.25);
+}
+
+/* ---------- Hero ---------- */
+.kmc-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0 5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.kmc-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 70% 30%, black, transparent 70%);
+  pointer-events: none;
+}
+
+.kmc-hero .hero-title {
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-weight: 900;
+  line-height: 1.05;
+  background: linear-gradient(120deg, #fff 30%, var(--magenta) 65%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.hero-scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: floaty 2.4s ease-in-out infinite;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ---------- Timeline (Acts) ---------- */
+.timeline-track {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  position: relative;
+}
+
+.timeline-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.timeline-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--magenta);
+}
+
+.timeline-card .timeline-index {
+  font-family: "Orbitron", sans-serif;
+  color: var(--magenta);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+}
+
+/* ---------- Event Cards ---------- */
+.event-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--cyan);
+  box-shadow: var(--shadow-glow);
+}
+
+.event-card .event-thumb {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--panel-2);
+  position: relative;
+}
+
+.event-card .event-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10,9,22,0.9) 100%);
+}
+
+.event-card .badge-category {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  background: rgba(10, 9, 22, 0.75);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+}
+
+.event-card .card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.event-card .event-date-chip {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  color: var(--amber);
+  letter-spacing: 0.05em;
+}
+
+.event-card .event-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.05rem;
+  margin: 0.4rem 0 0.6rem;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.event-card .seats-bar {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.event-card .seats-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+}
+
+/* ---------- Category Rail (sidebar / filters) ---------- */
+.category-rail .list-group-item {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.category-rail .list-group-item.active {
+  background: linear-gradient(135deg, rgba(255,46,154,0.18), rgba(34,230,255,0.1));
+  border-color: var(--magenta);
+  color: var(--text);
+}
+
+.category-rail .list-group-item:hover {
+  color: var(--text);
+  border-color: var(--cyan);
+}
+
+/* ---------- Panels / Forms ---------- */
+.kmc-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+
+.form-control, .form-select {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.form-control:focus, .form-select:focus {
+  background: var(--bg-alt);
+  color: var(--text);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 0.2rem rgba(34, 230, 255, 0.15);
+}
+
+.form-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.form-check-input:checked {
+  background-color: var(--magenta);
+  border-color: var(--magenta);
+}
+
+/* ---------- Details page ---------- */
+.detail-hero {
+  position: relative;
+  min-height: 340px;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.detail-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,9,22,0.2) 0%, rgba(10,9,22,0.95) 100%);
+}
+
+.detail-hero .detail-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+
+.info-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0.2rem 0.3rem 0.2rem 0;
+}
+
+/* ---------- Registration confirmation ---------- */
+.confirm-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--cyan);
+  box-shadow: var(--shadow-glow);
+}
+
+.success-check {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(56, 227, 154, 0.12);
+  border: 2px solid var(--success);
+  color: var(--success);
+  font-size: 2.2rem;
+  margin: 0 auto 1.5rem;
+}
+
+/* ---------- Admin ---------- */
+.admin-table {
+  --bs-table-bg: var(--panel);
+  --bs-table-color: var(--text);
+  --bs-table-border-color: var(--border);
+}
+
+.admin-table thead {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.admin-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--panel-2);
+}
+
+/* ---------- Footer ---------- */
+.kmc-footer {
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.kmc-footer .footer-brand {
+  font-family: "Orbitron", sans-serif;
+  color: var(--text);
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Misc ---------- */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.section-heading::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-muted);
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--panel-2); border-radius: 999px; }
+
+@media (max-width: 768px) {
+  .kmc-hero { padding: 4rem 0 3rem; }
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.seats-bar-fill {
+  width: 0;
+  transition: width 1s ease;
+}

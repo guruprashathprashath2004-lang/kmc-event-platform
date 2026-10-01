@@ -1,0 +1,27 @@
+@page "{id:int}"
+@model KMC_Client_Guruprashath.Pages.Event.RegisterSuccessModel
+@{
+    ViewData["Title"] = "Registration Confirmed";
+}
+
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <div class="kmc-panel">
+                <div class="success-check"><i class="bi bi-check-lg"></i></div>
+
+                <div class="eyebrow mb-2">Registration Confirmed</div>
+                <h1 class="h3 mb-3">Thank you, @Model.RegisteredName!</h1>
+                <p class="text-muted-kmc mb-4">
+                    You're registered for <strong class="text-white">@Model.Event.Title</strong> on
+                    @Model.Event.EventDate.ToString("dd MMM yyyy") at @Model.Event.StartTime.ToString(@"hh\:mm"), @Model.Event.Venue.
+                    A confirmation has been recorded &mdash; please bring a valid ID on the day.
+                </p>
+                <div class="d-flex gap-2 justify-content-center">
+                    <a asp-page="/Event/Details" asp-route-id="@Model.Event.EventId" class="btn btn-neon-outline">View Event</a>
+                    <a asp-page="/Event/Index" class="btn btn-neon">Explore More Events</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

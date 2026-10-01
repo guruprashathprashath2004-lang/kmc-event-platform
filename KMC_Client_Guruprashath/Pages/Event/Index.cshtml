@@ -1,0 +1,62 @@
+@page
+@model KMC_Client_Guruprashath.Pages.Event.IndexModel
+@{
+    ViewData["Title"] = "Events";
+}
+
+<section class="container py-5">
+    <div class="section-heading">
+        <div>
+            <div class="eyebrow">Kandy Municipal Council</div>
+            <h1 class="h3 mb-0">All Events</h1>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-3">
+            <form method="get" class="mb-4">
+                <label class="form-label">Search</label>
+                <div class="input-group">
+                    <input type="text" name="Q" value="@Model.Q" class="form-control" placeholder="Search events..." />
+                    <button class="btn btn-neon-outline" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+
+            <div class="eyebrow mb-2">Categories</div>
+            <div class="list-group category-rail mb-4">
+                <a asp-page="/Event/Index" class="list-group-item @(Model.CategoryId == null && string.IsNullOrEmpty(Model.Q) ? "active" : "")">
+                    <i class="bi bi-grid me-2"></i>All Categories
+                </a>
+                @foreach (var cat in Model.Categories)
+                {
+                    <a asp-page="/Event/Index" asp-route-categoryId="@cat.CategoryId"
+                       class="list-group-item @(Model.CategoryId == cat.CategoryId ? "active" : "")">
+                        <i class="bi @cat.IconClass me-2"></i>@cat.Name
+                        <span class="float-end">@cat.EventCount</span>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            @if (Model.Events.Any())
+            {
+                <div class="row g-4">
+                    @foreach (var ev in Model.Events)
+                    {
+                        <div class="col-md-6 col-xl-4 reveal-on-scroll">
+                            <partial name="_EventCard" model="ev" />
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class="bi bi-calendar-x fs-1 d-block mb-3"></i>
+                    No events matched your search. Try a different keyword or category.
+                </div>
+            }
+        </div>
+    </div>
+</section>

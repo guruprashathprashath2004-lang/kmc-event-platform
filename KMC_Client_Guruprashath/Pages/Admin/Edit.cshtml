@@ -1,0 +1,90 @@
+@page "{id:int}"
+@model KMC_Client_Guruprashath.Pages.Admin.EditModel
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<section class="container py-5">
+    <div class="eyebrow mb-2">Admin</div>
+    <h1 class="h3 mb-4">Edit Event</h1>
+
+    <div class="kmc-panel" style="max-width: 780px;">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="EventForm.EventId" />
+
+            <div class="mb-3">
+                <label asp-for="EventForm.Title" class="form-label">Event Title</label>
+                <input asp-for="EventForm.Title" class="form-control" />
+                <span asp-validation-for="EventForm.Title" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="EventForm.Description" class="form-label">Description</label>
+                <textarea asp-for="EventForm.Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="EventForm.Description" class="text-danger small"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="EventForm.CategoryId" class="form-label">Category</label>
+                    <select asp-for="EventForm.CategoryId" class="form-select">
+                        @foreach (var cat in Model.EventForm.Categories)
+                        {
+                            <option value="@cat.CategoryId" selected="@(cat.CategoryId == Model.EventForm.CategoryId)">@cat.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="EventForm.Venue" class="form-label">Venue</label>
+                    <input asp-for="EventForm.Venue" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="EventForm.EventDate" class="form-label">Event Date</label>
+                    <input asp-for="EventForm.EventDate" type="date" class="form-control" value="@Model.EventForm.EventDate.ToString("yyyy-MM-dd")" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="EventForm.StartTime" class="form-label">Start Time</label>
+                    <input asp-for="EventForm.StartTime" type="time" class="form-control" value="@Model.EventForm.StartTime.ToString(@"hh\:mm")" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="EventForm.Capacity" class="form-label">Capacity</label>
+                    <input asp-for="EventForm.Capacity" type="number" min="1" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3 form-check ms-1 mt-2">
+                    <input asp-for="EventForm.IsFeatured" class="form-check-input" />
+                    <label asp-for="EventForm.IsFeatured" class="form-check-label">Feature on homepage</label>
+                </div>
+                <div class="col-md-6 mb-3 form-check ms-1 mt-2">
+                    <input asp-for="EventForm.IsPublished" class="form-check-input" />
+                    <label asp-for="EventForm.IsPublished" class="form-check-label">Published (visible to public)</label>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Poster Image</label>
+                <div class="d-flex align-items-center gap-3">
+                    <img src="@(string.IsNullOrEmpty(Model.EventForm.ImageUrl) ? "/images/events/placeholder.jpg" : Model.EventForm.ImageUrl)" class="admin-thumb" style="width:80px;height:80px;" alt="Current poster" />
+                    <input type="file" name="PosterImage" accept="image/*" class="form-control" />
+                </div>
+                <div class="form-text text-muted-kmc">Leave empty to keep the current poster.</div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-neon"><i class="bi bi-save me-1"></i> Save Changes</button>
+                <a asp-page="/Admin/Index" class="btn btn-neon-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

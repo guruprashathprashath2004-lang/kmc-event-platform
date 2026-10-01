@@ -1,0 +1,63 @@
+@page "{id:int}"
+@model KMC_Client_Guruprashath.Pages.Event.RegisterModel
+@{
+    ViewData["Title"] = "Register - " + Model.RegForm.Event?.Title;
+}
+
+<section class="container py-5">
+    <div class="row g-5 justify-content-center">
+        <div class="col-lg-4">
+            <div class="kmc-panel">
+                <div class="eyebrow mb-2">You're registering for</div>
+                <div class="event-thumb rounded-3 mb-3" style="height:160px; background-image:url('@(string.IsNullOrEmpty(Model.RegForm.Event?.ImageUrl) ? "/images/events/placeholder.jpg" : Model.RegForm.Event.ImageUrl)');"></div>
+                <h3 class="h5">@Model.RegForm.Event?.Title</h3>
+                <p class="small text-muted-kmc mb-1"><i class="bi bi-calendar-event me-1"></i>@Model.RegForm.Event?.EventDate.ToString("dd MMM yyyy") &middot; @Model.RegForm.Event?.StartTime.ToString(@"hh\:mm")</p>
+                <p class="small text-muted-kmc mb-0"><i class="bi bi-geo-alt me-1"></i>@Model.RegForm.Event?.Venue</p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="eyebrow mb-2">Registration Form</div>
+            <h1 class="h3 mb-4">Reserve Your Seat</h1>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="RegForm.EventId" />
+
+                <div class="mb-3">
+                    <label asp-for="RegForm.FullName" class="form-label">Full Name</label>
+                    <input asp-for="RegForm.FullName" class="form-control" placeholder="e.g. Dhanushka Perera" />
+                    <span asp-validation-for="RegForm.FullName" class="text-danger small"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="RegForm.Email" class="form-label">Email</label>
+                        <input asp-for="RegForm.Email" class="form-control" placeholder="you@example.com" />
+                        <span asp-validation-for="RegForm.Email" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="RegForm.Phone" class="form-label">Phone</label>
+                        <input asp-for="RegForm.Phone" class="form-control" placeholder="07X XXX XXXX" />
+                        <span asp-validation-for="RegForm.Phone" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="RegForm.NIC" class="form-label">NIC Number</label>
+                    <input asp-for="RegForm.NIC" class="form-control" placeholder="e.g. 200012345678" />
+                    <span asp-validation-for="RegForm.NIC" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-neon w-100">
+                    <i class="bi bi-check2-circle me-1"></i> Confirm Registration
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

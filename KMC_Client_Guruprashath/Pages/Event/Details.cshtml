@@ -1,0 +1,74 @@
+@page "{id:int}"
+@model KMC_Client_Guruprashath.Pages.Event.DetailsModel
+@{
+    ViewData["Title"] = Model.Event.Title;
+    var ev = Model.Event;
+    var fillPercent = ev.Capacity > 0 ? (int)Math.Round(100.0 * ev.RegisteredCount / ev.Capacity) : 0;
+}
+
+<section class="container py-5">
+    <div class="detail-hero mb-5" style="background-image:url('@(string.IsNullOrEmpty(ev.ImageUrl) ? "/images/events/placeholder.jpg" : ev.ImageUrl)');">
+        <div class="detail-hero-content">
+            <span class="info-pill">@ev.CategoryName</span>
+            <h1 class="hero-title" style="font-size: clamp(2rem, 4.5vw, 3.2rem);">@ev.Title</h1>
+            <div class="d-flex flex-wrap">
+                <span class="info-pill"><i class="bi bi-calendar-event me-1"></i>@ev.EventDate.ToString("dd MMM yyyy")</span>
+                <span class="info-pill"><i class="bi bi-clock me-1"></i>@ev.StartTime.ToString(@"hh\:mm")</span>
+                <span class="info-pill"><i class="bi bi-geo-alt me-1"></i>@ev.Venue</span>
+                <span class="info-pill"><i class="bi bi-people me-1"></i>@ev.SeatsLeft of @ev.Capacity seats left</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <div class="eyebrow mb-2">Synopsis</div>
+            <h2 class="h4 mb-3">About this event</h2>
+            <p class="text-muted-kmc" style="line-height: 1.7;">@ev.Description</p>
+
+            <div class="eyebrow mt-5 mb-3">Event Journey</div>
+            <div class="timeline-track">
+                <div class="timeline-card reveal-on-scroll">
+                    <div class="timeline-index">ACT I</div>
+                    <h4 class="h6 mt-2">Registration</h4>
+                    <p class="text-muted-kmc small mb-0">Register online and secure your seat before the event fills up.</p>
+                </div>
+                <div class="timeline-card reveal-on-scroll">
+                    <div class="timeline-index">ACT II</div>
+                    <h4 class="h6 mt-2">@ev.EventDate.ToString("dd MMM")</h4>
+                    <p class="text-muted-kmc small mb-0">Arrive at @ev.Venue by @ev.StartTime.ToString(@"hh\:mm") for check-in.</p>
+                </div>
+                <div class="timeline-card reveal-on-scroll">
+                    <div class="timeline-index">ACT III</div>
+                    <h4 class="h6 mt-2">Experience</h4>
+                    <p class="text-muted-kmc small mb-0">Enjoy the event alongside the Kandy community.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="kmc-panel reveal-on-scroll">
+                <div class="eyebrow mb-2">Availability</div>
+                <div class="d-flex justify-content-between small mb-1">
+                    <span>@ev.RegisteredCount registered</span>
+                    <span>@ev.Capacity total</span>
+                </div>
+                <div class="seats-bar mb-4">
+                    <div class="seats-bar-fill" data-fill="@fillPercent"></div>
+                </div>
+
+                @if (ev.SeatsLeft > 0)
+                {
+                    <a asp-page="/Event/Register" asp-route-id="@ev.EventId" class="btn btn-neon w-100 mb-2">
+                        <i class="bi bi-pencil-square me-1"></i> Register Now
+                    </a>
+                }
+                else
+                {
+                    <button class="btn w-100 mb-2 disabled" style="background: var(--panel-2); color: var(--text-muted);">Fully Booked</button>
+                }
+                <a asp-page="/Event/Index" class="btn btn-neon-outline w-100">Back to Events</a>
+            </div>
+        </div>
+    </div>
+</section>

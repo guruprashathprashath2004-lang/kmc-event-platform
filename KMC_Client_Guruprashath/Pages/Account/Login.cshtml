@@ -1,0 +1,51 @@
+@page
+@model KMC_Client_Guruprashath.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="kmc-panel">
+                <div class="eyebrow mb-2">Welcome Back</div>
+                <h1 class="h3 mb-4">Login to KMC Events</h1>
+
+                @if (!string.IsNullOrEmpty(Model.LoginForm.ErrorMessage))
+                {
+                    <div class="alert alert-danger bg-transparent border-danger text-danger">@Model.LoginForm.ErrorMessage</div>
+                }
+
+                <form method="post">
+                    <input type="hidden" asp-for="LoginForm.ReturnUrl" />
+                    <div class="mb-3">
+                        <label asp-for="LoginForm.Username" class="form-label">Username</label>
+                        <input asp-for="LoginForm.Username" class="form-control" placeholder="e.g. citizen.demo" />
+                        <span asp-validation-for="LoginForm.Username" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="LoginForm.Password" class="form-label">Password</label>
+                        <input asp-for="LoginForm.Password" class="form-control" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+                        <span asp-validation-for="LoginForm.Password" class="text-danger small"></span>
+                    </div>
+                    <button type="submit" class="btn btn-neon w-100">
+                        <i class="bi bi-shield-lock me-1"></i> Sign In
+                    </button>
+                </form>
+
+                <p class="text-muted-kmc small mt-3 mb-1">Demo accounts:</p>
+                <p class="text-muted-kmc small mb-1"><code>kmc.admin</code> / <code>Kmc@2026</code> (Admin)</p>
+                <p class="text-muted-kmc small mb-1"><code>organizer.demo</code> / <code>Organizer@2026</code> (Organizer)</p>
+                <p class="text-muted-kmc small mb-3"><code>citizen.demo</code> / <code>Citizen@2026</code> (Citizen)</p>
+
+                <p class="text-muted-kmc small mb-0">
+                    New here? <a asp-page="/Account/Register">Create a free account</a> to register for events or submit your own.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,80 @@
+@page
+@model KMC_Client_Guruprashath.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Create Account";
+}
+
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="kmc-panel">
+                <div class="eyebrow mb-2">Join KMC Events</div>
+                <h1 class="h3 mb-4">Create an Account</h1>
+
+                @if (!string.IsNullOrEmpty(Model.RegisterForm.ErrorMessage))
+                {
+                    <div class="alert alert-danger bg-transparent border-danger text-danger">@Model.RegisterForm.ErrorMessage</div>
+                }
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <form method="post">
+                    <input type="hidden" asp-for="RegisterForm.ReturnUrl" />
+
+                    <div class="mb-4">
+                        <label class="form-label d-block">I want to join as</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="RegisterForm.Role" id="roleCitizen" value="Citizen" autocomplete="off" checked="@(Model.RegisterForm.Role != "Organizer")">
+                            <label class="btn btn-neon-outline w-50" for="roleCitizen"><i class="bi bi-person me-1"></i> Citizen &mdash; register for events</label>
+
+                            <input type="radio" class="btn-check" name="RegisterForm.Role" id="roleOrganizer" value="Organizer" autocomplete="off" checked="@(Model.RegisterForm.Role == "Organizer")">
+                            <label class="btn btn-neon-outline w-50" for="roleOrganizer"><i class="bi bi-megaphone me-1"></i> Organizer &mdash; submit events</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="RegisterForm.FullName" class="form-label">Full Name</label>
+                            <input asp-for="RegisterForm.FullName" class="form-control" />
+                            <span asp-validation-for="RegisterForm.FullName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="RegisterForm.Phone" class="form-label">Phone</label>
+                            <input asp-for="RegisterForm.Phone" class="form-control" placeholder="07X XXX XXXX" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="RegisterForm.Username" class="form-label">Username</label>
+                        <input asp-for="RegisterForm.Username" class="form-control" />
+                        <span asp-validation-for="RegisterForm.Username" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="RegisterForm.Email" class="form-label">Email</label>
+                        <input asp-for="RegisterForm.Email" class="form-control" placeholder="you@example.com" />
+                        <span asp-validation-for="RegisterForm.Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="RegisterForm.Password" class="form-label">Password</label>
+                        <input asp-for="RegisterForm.Password" class="form-control" />
+                        <span asp-validation-for="RegisterForm.Password" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-neon w-100">
+                        <i class="bi bi-person-plus me-1"></i> Create Account
+                    </button>
+                </form>
+
+                <p class="text-muted-kmc small mt-3 mb-0">
+                    Already have an account? <a asp-page="/Account/Login">Login here</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

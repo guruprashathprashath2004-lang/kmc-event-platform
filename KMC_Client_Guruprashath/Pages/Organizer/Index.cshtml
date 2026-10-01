@@ -1,0 +1,76 @@
+@page
+@model KMC_Client_Guruprashath.Pages.Organizer.IndexModel
+@{
+    ViewData["Title"] = "My Events";
+}
+
+<section class="container py-5">
+    <div class="section-heading">
+        <div>
+            <div class="eyebrow">Organizer &mdash; @Model.OrganizerName</div>
+            <h1 class="h3 mb-0">My Submitted Events</h1>
+        </div>
+        <a asp-page="/Organizer/Create" class="btn btn-neon">
+            <i class="bi bi-plus-circle me-1"></i> Submit New Event
+        </a>
+    </div>
+
+    <div class="kmc-panel">
+        <div class="table-responsive">
+            <table class="table admin-table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Poster</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Seats</th>
+                        <th>Approval Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ev in Model.Events)
+                    {
+                        <tr>
+                            <td><img src="@(string.IsNullOrEmpty(ev.ImageUrl) ? "/images/events/placeholder.jpg" : ev.ImageUrl)" class="admin-thumb" alt="@ev.Title" /></td>
+                            <td>@ev.Title</td>
+                            <td>@ev.CategoryName</td>
+                            <td>@ev.EventDate.ToString("dd MMM yyyy")</td>
+                            <td>@ev.RegisteredCount / @ev.Capacity</td>
+                            <td>
+                                @switch (ev.ApprovalStatus)
+                                {
+                                    case "Approved":
+                                        <span class="badge" style="background: rgba(56,227,154,0.15); color: var(--success); border:1px solid var(--success);">Approved &amp; Live</span>
+                                        break;
+                                    case "Rejected":
+                                        <span class="badge" style="background: rgba(255,84,112,0.12); color: var(--danger); border:1px solid var(--danger);">Rejected</span>
+                                        break;
+                                    default:
+                                        <span class="badge" style="background: rgba(255,178,56,0.15); color: var(--amber); border:1px solid var(--amber);">Pending Review</span>
+                                        break;
+                                }
+                            </td>
+                            <td class="text-end">
+                                <a asp-page="/Organizer/Edit" asp-route-id="@ev.EventId" class="btn btn-sm btn-neon-outline me-1">Edit</a>
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@ev.EventId" class="d-inline"
+                                      onsubmit="return confirm('Remove this event?');">
+                                    <button type="submit" class="btn btn-sm" style="background: rgba(255,84,112,0.12); color: var(--danger); border: 1px solid var(--danger);">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Events.Any())
+                    {
+                        <tr><td colspan="7" class="text-center text-muted-kmc py-4">You haven't submitted any events yet.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p class="text-muted-kmc small mt-3">
+        <i class="bi bi-info-circle me-1"></i> New submissions and any edits go to the KMC Admin for review before appearing publicly.
+    </p>
+</section>

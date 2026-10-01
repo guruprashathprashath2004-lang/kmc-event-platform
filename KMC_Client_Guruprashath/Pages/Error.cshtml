@@ -1,0 +1,18 @@
+@page
+@model KMC_Client_Guruprashath.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<section class="container py-5 text-center">
+    <div class="empty-state">
+        <i class="bi bi-exclamation-octagon fs-1 d-block mb-3" style="color: var(--danger);"></i>
+        <h1 class="h4">Something went wrong</h1>
+        <p class="text-muted-kmc">Please try again, or head back to the homepage.</p>
+        @if (Model.ShowRequestId)
+        {
+            <p class="text-muted-kmc small">Request ID: <code>@Model.RequestId</code></p>
+        }
+        <a asp-page="/Index" class="btn btn-neon mt-2">Back to Home</a>
+    </div>
+</section>

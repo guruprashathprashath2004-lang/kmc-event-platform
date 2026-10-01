@@ -1,0 +1,56 @@
+@page
+@model KMC_Client_Guruprashath.Pages.Admin.ApprovalsModel
+@{
+    ViewData["Title"] = "Pending Approvals";
+}
+
+<section class="container py-5">
+    <div class="section-heading">
+        <div>
+            <div class="eyebrow">Admin</div>
+            <h1 class="h3 mb-0">Pending Event Approvals</h1>
+        </div>
+        <a asp-page="/Admin/Index" class="btn btn-neon-outline btn-sm">All Events</a>
+    </div>
+
+    @if (Model.Pending.Any())
+    {
+        <div class="row g-4">
+            @foreach (var ev in Model.Pending)
+            {
+                <div class="col-md-6">
+                    <div class="kmc-panel h-100">
+                        <div class="d-flex gap-3">
+                            <img src="@(string.IsNullOrEmpty(ev.ImageUrl) ? "/images/events/placeholder.jpg" : ev.ImageUrl)" class="admin-thumb" style="width:90px;height:90px;" alt="@ev.Title" />
+                            <div class="flex-grow-1">
+                                <h3 class="h6 mb-1">@ev.Title</h3>
+                                <div class="text-muted-kmc small mb-1">@ev.CategoryName &middot; @ev.EventDate.ToString("dd MMM yyyy")</div>
+                                <div class="text-muted-kmc small mb-1"><i class="bi bi-geo-alt"></i> @ev.Venue</div>
+                                <div class="text-muted-kmc small">Submitted by: @ev.OrganizerName</div>
+                            </div>
+                        </div>
+                        <p class="text-muted-kmc small mt-3">@(ev.Description.Length > 140 ? ev.Description.Substring(0, 140) + "..." : ev.Description)</p>
+                        <div class="d-flex gap-2">
+                            <form method="post" asp-page-handler="Approve" asp-route-id="@ev.EventId" class="flex-fill">
+                                <button type="submit" class="btn btn-neon w-100"><i class="bi bi-check-lg me-1"></i> Approve</button>
+                            </form>
+                            <form method="post" asp-page-handler="Reject" asp-route-id="@ev.EventId" class="flex-fill"
+                                  onsubmit="return confirm('Reject this event?');">
+                                <button type="submit" class="btn w-100" style="background: rgba(255,84,112,0.12); color: var(--danger); border: 1px solid var(--danger);">
+                                    <i class="bi bi-x-lg me-1"></i> Reject
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="bi bi-check2-all fs-1 d-block mb-3"></i>
+            No events waiting for review right now.
+        </div>
+    }
+</section>

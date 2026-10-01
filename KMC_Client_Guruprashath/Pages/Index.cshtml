@@ -1,0 +1,114 @@
+@page
+@model KMC_Client_Guruprashath.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="kmc-hero">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="eyebrow mb-3">Kandy Municipal Council presents</div>
+                <h1 class="hero-title">THE CITY'S<br />NEXT EVENT</h1>
+                <p class="text-muted-kmc fs-5 mb-4" style="max-width: 520px;">
+                    Perahera pageants, community drives, marathons and workshops &mdash;
+                    discover what's happening across Kandy and register in minutes.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a asp-page="/Event/Index" class="btn btn-neon">
+                        <i class="bi bi-calendar2-week me-1"></i> Browse Events
+                    </a>
+                    <a href="#featured" class="btn btn-neon-outline">Explore Featured</a>
+                </div>
+            </div>
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <div class="kmc-panel reveal-on-scroll">
+                    <div class="eyebrow mb-3">Event Categories</div>
+                    <div class="d-flex flex-column gap-2">
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <a asp-page="/Event/Index" asp-route-categoryId="@cat.CategoryId"
+                               class="d-flex justify-content-between align-items-center text-decoration-none px-3 py-2 rounded-3"
+                               style="background: var(--bg-alt); border: 1px solid var(--border); color: var(--text);">
+                                <span><i class="bi @cat.IconClass me-2" style="color: var(--cyan);"></i>@cat.Name</span>
+                                <span class="badge rounded-pill" style="background: var(--panel-2); color: var(--text-muted);">@cat.EventCount</span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <span class="hero-scroll-cue"><i class="bi bi-chevron-double-down"></i> Scroll Down</span>
+        </div>
+    </div>
+</section>
+
+@if (Model.FeaturedEvents.Any())
+{
+    <section id="featured" class="container py-5">
+        <div class="section-heading">
+            <div>
+                <div class="eyebrow">Don't miss</div>
+                <h2 class="h3 mb-0">Featured Events</h2>
+            </div>
+        </div>
+        <div class="row g-4">
+            @foreach (var ev in Model.FeaturedEvents)
+            {
+                <div class="col-md-6 col-lg-4 reveal-on-scroll">
+                    <partial name="_EventCard" model="ev" />
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<section class="container py-5">
+    <div class="section-heading">
+        <div>
+            <div class="eyebrow">Coming up</div>
+            <h2 class="h3 mb-0">Upcoming Events</h2>
+        </div>
+        <a asp-page="/Event/Index" class="btn btn-neon-outline btn-sm">View All</a>
+    </div>
+
+    @if (Model.UpcomingEvents.Any())
+    {
+        <div class="row g-4">
+            @foreach (var ev in Model.UpcomingEvents)
+            {
+                <div class="col-md-6 col-lg-4 reveal-on-scroll">
+                    <partial name="_EventCard" model="ev" />
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="bi bi-calendar-x fs-1 d-block mb-3"></i>
+            No upcoming events right now. Please check back soon.
+        </div>
+    }
+</section>
+
+<section class="container pb-5">
+    <div class="timeline-track">
+        <div class="timeline-card reveal-on-scroll">
+            <div class="timeline-index">STEP 01</div>
+            <h4 class="h6 mt-2">Discover</h4>
+            <p class="text-muted-kmc mb-0 small">Browse events by category or search for what interests you.</p>
+        </div>
+        <div class="timeline-card reveal-on-scroll">
+            <div class="timeline-index">STEP 02</div>
+            <h4 class="h6 mt-2">Register</h4>
+            <p class="text-muted-kmc mb-0 small">Fill in your details and add a photo in a couple of minutes.</p>
+        </div>
+        <div class="timeline-card reveal-on-scroll">
+            <div class="timeline-index">STEP 03</div>
+            <h4 class="h6 mt-2">Attend</h4>
+            <p class="text-muted-kmc mb-0 small">Show up on the day &mdash; your seat is confirmed instantly.</p>
+        </div>
+    </div>
+</section>
